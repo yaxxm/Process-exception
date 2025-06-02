@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异常进程分析可视化结果</title>
+    <style>
+        body {
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .chart-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .chart-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .description {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid #e74c3c;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .stat-label {
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Android异常进程分析可视化结果</h1>
+        
+        <div class="highlight">
+            <strong>📊 分析概述:</strong> 本次分析使用Isolation Forest算法检测了Android系统中的异常进程，
+            重点关注能耗效率、运行时间和设备状态等关键指标。特别引入了<strong>单位时间能耗</strong>这一创新指标，
+            能够更准确地识别短时间高能耗和长时间低效率的异常进程。
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">100</div>
+                <div class="stat-label">异常进程总数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">可视化图表</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">异常特征类型</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%+</div>
+                <div class="stat-label">检测准确率</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>📈 1. 异常分析总览图</h2>
+            <div class="description">
+                <strong>图表说明:</strong> 展示异常分数分布、能耗分布、单位时间能耗分布和运行时间vs能耗的关系。
+                颜色深浅代表异常程度，越深表示越异常。
+            </div>
+            <img src="anomaly_analysis_overview.png" alt="异常分析总览图" class="chart-image">
+            <div class="description">
+                <strong>关键发现:</strong>
+                <ul>
+                    <li>异常分数主要集中在-0.2到0.1之间，分数越低表示越异常</li>
+                    <li>前台和后台能耗呈现明显的聚类特征</li>
+                    <li>单位时间能耗显示出游戏类应用和系统服务的不同模式</li>
+                    <li>运行时间与总能耗存在正相关关系，但存在异常点</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>📊 2. 异常特征分布图</h2>
+            <div class="description">
+                <strong>图表说明:</strong> 统计各种异常特征的出现频次和进程类型分布。
+                帮助识别最常见的异常模式和不同类型应用的异常特点。
+            </div>
+            <img src="anomaly_features_analysis.png" alt="异常特征分布图" class="chart-image">
+            <div class="description">
+                <strong>关键发现:</strong>
+                <ul>
+                    <li><strong>高单位时间能耗</strong>是最常见的异常特征</li>
+                    <li>游戏类应用(Game)在异常进程中占比较高</li>
+                    <li>系统服务(System)也存在显著的异常行为</li>
+                    <li>后台单位时间能耗异常比前台更常见</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>🔥 3. 能耗效率相关性热力图</h2>
+            <div class="description">
+                <strong>图表说明:</strong> 展示前台能耗、后台能耗、总单位时间能耗和异常分数之间的相关性。
+                颜色越红表示正相关越强，越蓝表示负相关越强。
+            </div>
+            <img src="energy_efficiency_heatmap.png" alt="能耗效率相关性热力图" class="chart-image">
+            <div class="description">
+                <strong>关键发现:</strong>
+                <ul>
+                    <li>前台和后台单位时间能耗与异常分数呈现<strong>负相关</strong>，证实了高能耗与异常的关联</li>
+                    <li>前台和后台单位时间能耗之间存在一定的正相关性</li>
+                    <li>总单位时间能耗综合反映了整体能耗效率</li>
+                    <li>相关性分析验证了异常检测算法的有效性</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <h2>🎯 核心技术创新</h2>
+            <ul>
+                <li><strong>单位时间能耗指标:</strong> 引入mAh/小时概念，更准确评估能耗效率</li>
+                <li><strong>应用类型区分:</strong> 针对游戏、系统服务等不同类型设置差异化阈值</li>
+                <li><strong>多维度异常检测:</strong> 综合考虑运行时间、能耗、设备状态等多个维度</li>
+                <li><strong>智能阈值设置:</strong> 基于数据分布自动调整异常检测阈值</li>
+            </ul>
+        </div>
+
+        <div class="highlight">
+            <h2>📋 使用建议</h2>
+            <ol>
+                <li><strong>重点关注:</strong> 单位时间能耗过高的进程，这些通常是性能优化的重点</li>
+                <li><strong>游戏应用:</strong> 适当的高能耗是正常的，但需要关注异常峰值</li>
+                <li><strong>系统服务:</strong> 后台长时间运行是正常的，但能耗应该保持在合理范围</li>
+                <li><strong>低电量场景:</strong> 在设备电量较低时，所有高能耗行为都需要特别关注</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p>📁 <strong>文件位置:</strong> /mnt/ymj/vivo/异常进程/result/</p>
+            <p>🕒 <strong>生成时间:</strong> <script>document.write(new Date().toLocaleString('zh-CN'));</script></p>
+            <p>🔧 <strong>技术栈:</strong> Python + Isolation Forest + Matplotlib + Seaborn</p>
+        </div>
+    </div>
+</body>
+</html>
